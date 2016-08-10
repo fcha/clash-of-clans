@@ -12,7 +12,7 @@ interface RepositoryInterface {
 	public function saveResults($type, $status, $results);
 
 	/**
-	 * Get active clan results
+	 * Get active results
 	 *
 	 * @param  int    $typeId
 	 * @param  int    $statusId
@@ -31,4 +31,13 @@ interface RepositoryInterface {
 	 */
 	public function setStatus($id, $statusId);
 
+	/**
+	 * Get recent result
+	 *
+	 * @param  int    $typeId
+	 * @param  int    $statusId
+	 *
+	 * @return array
+	 */
+	public function getRecentResult($typeId, $statusId);
 }

@@ -51,7 +51,8 @@ class Repository implements RepositoryInterface {
 	 */
 	public function getResults($typeId, $statusId)
 	{
-		$results = $this->result->whereTypeId($typeId)->whereStatusId($statusId)->get();
+		if (!$results = $this->result->whereTypeId($typeId)->whereStatusId($statusId)->get())
+			return [];
 
 		return $this->formatter->formatResults($results);
 	}
@@ -68,5 +69,21 @@ class Repository implements RepositoryInterface {
 
 		$result->status_id = $statusId;
 		$result->save();
+	}
+
+	/**
+	 * Get recent result
+	 *
+	 * @param  int    $typeId
+	 * @param  int    $statusId
+	 *
+	 * @return array
+	 */
+	public function getRecentResult($typeId, $statusId)
+	{
+		if (!$result = $this->result->whereTypeId($typeId)->whereStatusId($statusId)->orderBy('created_at', 'DESC')->first())
+			return [];
+
+		return $this->formatter->formatResult($result);
 	}
 }

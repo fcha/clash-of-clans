@@ -18,7 +18,7 @@ class Fetcher {
 	}
 
 	/**
-	 * Gets the clan  information
+	 * Gets the clan results information
 	 *
 	 * @return array
 	 */
@@ -28,6 +28,27 @@ class Fetcher {
 		$statusId = config('api.results.statuses.active');
 
 		return $this->repository->getResults($typeId, $statusId);
+	}
+
+	/**
+	 * Gets the league results information
+	 *
+	 * @return array
+	 */
+	public function getMostRecentActiveLeagueResults()
+	{
+		$typeId = config('api.results.types.leagues');
+		$statusId = config('api.results.statuses.active');
+
+		$recentResult = $this->repository->getRecentResult($typeId, $statusId);
+
+		$statusId = config('api.results.statuses.completed');
+		$completedResult = $this->repository->getRecentResult($typeId, $statusId);
+
+		if (array_get($completedResult, 'id', 0) >= array_get($recentResult, 'id', 0))
+			return [];
+
+		return $recentResult;
 	}
 
 }
