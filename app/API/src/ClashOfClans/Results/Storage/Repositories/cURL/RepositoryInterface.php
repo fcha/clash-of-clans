@@ -1,4 +1,4 @@
-<?php namespace App\API\src\ClashOfClans\Storage\Repositories\cURL;
+<?php namespace App\API\src\ClashOfClans\Results\Storage\Repositories\cURL;
 
 interface RepositoryInterface {
 
