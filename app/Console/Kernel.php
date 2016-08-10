@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\FetchClan::class,
+        Commands\ProcessClan::class,
     ];
 
     /**
@@ -33,6 +34,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('coc:fetchClan')
-                 ->cron('0,1,2,3,4,5,55,56,57,58,59 0,1,23 * * * *');
+                 ->cron('0,1,2,3,4,5,55,56,57,58,59 * * * * *');
     }
 }
