@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\API\src\ClashOfClans\Results\Fetcher;
 use App\API\src\ClashOfClans\Results\Updater as ResultUpdater;
@@ -37,6 +38,11 @@ class ProcessClan extends Command
      * @var \App\API\src\ClashOfClans\Results\Updater
      */
     protected $resultUpdater;
+
+    /**
+     * @var Carbon
+     */
+    protected $date;
 
     /**
      * @var array
@@ -85,6 +91,7 @@ class ProcessClan extends Command
     protected function buildMemberInserts(array $results)
     {
         $inserts = [];
+        $this->date = new Carbon;
 
         foreach ($results as $result)
         {
@@ -138,7 +145,8 @@ class ProcessClan extends Command
             'current_rank' => array_get($member, 'clanRank'),
             'previous_rank' => array_get($member, 'previousClanRank'),
             'troops_donated' => array_get($member, 'donations'),
-            'troops_received' => array_get($member, 'donationsReceived')
+            'troops_received' => array_get($member, 'donationsReceived'),
+            'created_at' => $this->date
         ];
     }
 }
