@@ -21,7 +21,7 @@ class Member extends Eloquent {
 
 	public function league()
 	{
-		return $this->belongsTo('App\API\src\ClashOfClans\Members\Storage\Entities\League', 'league_id');
+		return $this->belongsTo('App\API\src\ClashOfClans\Leagues\Storage\Entities\League', 'league_id');
 	}
 
 }
