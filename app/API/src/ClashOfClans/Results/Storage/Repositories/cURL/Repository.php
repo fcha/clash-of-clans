@@ -34,6 +34,18 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
+	 * Get clan information
+	 *
+	 * @return array
+	 */
+	public function getLeagues()
+	{
+		$url = "https://api.clashofclans.com/v1/leagues";
+
+		return $this->execute($url);
+	}
+
+	/**
 	 * Executes curl with the provided url
 	 *
 	 * @param  string	$url

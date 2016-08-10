@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\FetchClan::class,
         Commands\ProcessClan::class,
+        Commands\FetchLeague::class,
     ];
 
     /**

@@ -9,4 +9,11 @@ interface RepositoryInterface {
 	 */
 	public function getClan();
 
+	/**
+	 * Get leauges information
+	 *
+	 * @return array
+	 */
+	public function getLeagues();
+
 }
