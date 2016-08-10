@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class wartactics extends Seeder
+class result_types extends Seeder
 {
     /**
      * Run the database seeds.
