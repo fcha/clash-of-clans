@@ -19,6 +19,12 @@ return [
 		'location_clan_rankings' => 5,
 		'location_plyaer_rankings' => 6,
 		'leagues' => 7,
-		'league_seasons' => 8,
-	]
+		'league_seasons' => 8
+	],
+
+	'statuses' => [
+		'active' => 1,
+		'completed' => 2,
+		'failed' => 3
+	],
 ];
