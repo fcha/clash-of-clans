@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\RepositoryInterface as Fetcher;
 use App\API\src\ClashOfClans\Results\Storage\Repositories\Eloquent\RepositoryInterface as Saver;
 
-class FetchClan extends Command
+class FetchLeague extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'coc:fetchClan';
+    protected $signature = 'coc:fetchLeague';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fetches and stores clan information from SuperCell\'s API';
+    protected $description = 'Fetches and stores league information from SuperCell\'s API';
 
     /**
      * @var \App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\RepositoryInterface
@@ -46,12 +46,10 @@ class FetchClan extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
-        $results = $this->fetcher->getClan();
+        $results = $this->fetcher->getLeagues();
 
         if ($errors = array_get(json_decode($results, true), 'reason'))
             $this->fail($results);
@@ -66,7 +64,7 @@ class FetchClan extends Command
      */
     protected function fail($results)
     {
-        $resultTypeId = config('api.results.types.clans');
+        $resultTypeId = config('api.results.types.leagues');
         $statusId = config('api.results.statuses.failed');
 
         $this->saver->saveResults($resultTypeId, $statusId, $results);
@@ -79,7 +77,7 @@ class FetchClan extends Command
      */
     protected function success($results)
     {
-        $resultTypeId = config('api.results.types.clans');
+        $resultTypeId = config('api.results.types.leagues');
         $statusId = config('api.results.statuses.active');
 
         $this->saver->saveResults($resultTypeId, $statusId, $results);

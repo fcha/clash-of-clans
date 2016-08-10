@@ -6,9 +6,10 @@ interface RepositoryInterface {
 	 * Save api results
 	 *
 	 * @param  int       $type
+	 * @param  int       $status
 	 * @param  string    $results
 	 */
-	public function saveResults($type, $results);
+	public function saveResults($type, $status, $results);
 
 	/**
 	 * Get active clan results

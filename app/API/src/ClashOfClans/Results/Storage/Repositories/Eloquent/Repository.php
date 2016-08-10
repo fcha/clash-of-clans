@@ -26,13 +26,15 @@ class Repository implements RepositoryInterface {
 	/**
 	 * Save api results
 	 *
-	 * @param  int    $type
+	 * @param  int       $type
+	 * @param  int       $status
 	 * @param  string    $results
 	 */
-	public function saveResults($type, $results)
+	public function saveResults($type, $status, $results)
 	{
 		$result = $this->result->create([
 			'type_id' => $type,
+			'status_id' => $status,
 			'result' => $results
 		]);
 
