@@ -35,6 +35,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('coc:fetchClan')
-                 ->cron('0,1,2,3,4,5,55,56,57,58,59 * * * * *');
+                 ->cron('0,1,2,3,4,5,55,56,57,58,59 * * * * *')->withoutOverlapping();
+
+        $schedule->command('coc:processClan')
+                 ->everyMinute()->withoutOverlapping();
     }
 }
