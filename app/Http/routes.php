@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api'], function() {
 
-    $clan = App::make('App\API\src\ClashOfClans\Fetchers\Clan');
+//    $clan = App::make('App\API\src\ClashOfClans\Fetchers\Clan');
 
-    //debug_object($clan->getClan(), true);
+//    debug_object($clan->getActiveClanResults(), true);
 });
