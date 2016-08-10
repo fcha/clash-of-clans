@@ -1,8 +1,8 @@
 <?php
 
-use database\resultTypes;
-use database\resultStatuses;
-use database\roles;
+use database\seeds\resultTypes;
+use database\seeds\resultStatuses;
+use database\seeds\roles;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
