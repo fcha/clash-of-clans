@@ -17,6 +17,7 @@ class ServiceProvider extends BaseServiceProvider {
 	 */
 	protected function registerServiceProviders()
 	{
+		$this->app->register('App\API\src\ClashOfClans\Leagues\ServiceProvider');
 		$this->app->register('App\API\src\ClashOfClans\Members\ServiceProvider');
 		$this->app->register('App\API\src\ClashOfClans\Results\ServiceProvider');
 	}
