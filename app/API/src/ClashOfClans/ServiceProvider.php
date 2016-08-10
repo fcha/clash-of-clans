@@ -9,23 +9,16 @@ class ServiceProvider extends BaseServiceProvider {
 	 */
 	public function register()
 	{
-		$this->registerRepositories();
+		$this->registerServiceProviders();
 	}
 
 	/**
-	 * Registers the offer repository
+	 * register service providers
 	 */
-	protected function registerRepositories()
+	protected function registerServiceProviders()
 	{
-		$this->app->singleton(
-			'App\API\src\ClashOfClans\Storage\Repositories\cURL\RepositoryInterface',
-			'App\API\src\ClashOfClans\Storage\Repositories\cURL\Repository'
-		);
-
-		$this->app->singleton(
-			'App\API\src\ClashOfClans\Storage\Repositories\Eloquent\RepositoryInterface',
-			'App\API\src\ClashOfClans\Storage\Repositories\Eloquent\Repository'
-		);
+		$this->app->register('App\API\src\ClashOfClans\Members\ServiceProvider');
+		$this->app->register('App\API\src\ClashOfClans\Results\ServiceProvider');
 	}
 
 }
