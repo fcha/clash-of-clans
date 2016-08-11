@@ -66,7 +66,7 @@ class ProcessLeague extends Command
     public function handle()
     {
         //retrieve the most recent active league results
-        if (!$result = $this->fetcher->getMostRecentActiveLeagueResults())
+        if (!$result = $this->fetcher->getRecentActiveLeagueResults())
             return;
 
         $resultId = $result['id'];
