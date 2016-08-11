@@ -31,11 +31,11 @@ class Fetcher {
 	}
 
 	/**
-	 * Gets the league results information
+	 * Gets the recent league results information
 	 *
 	 * @return array
 	 */
-	public function getMostRecentActiveLeagueResults()
+	public function getRecentActiveLeagueResults()
 	{
 		$typeId = config('api.results.types.leagues');
 		$statusId = config('api.results.statuses.active');
@@ -49,6 +49,21 @@ class Fetcher {
 			return [];
 
 		return $recentResult;
+	}
+
+	/**
+	 * Get the recent clan result information
+	 *
+	 * @return array
+	 */
+	public function getRecentCompletedClanResult()
+	{
+		$typeId = config('api.results.types.clans');
+		$statusId = config('api.results.statuses.completed');
+
+		$recentResult = $this->repository->getRecentResult($typeId, $statusId);
+
+		return array_get($recentResult, 'id');
 	}
 
 }

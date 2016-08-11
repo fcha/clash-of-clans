@@ -34,6 +34,21 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
+	 * Get members
+	 *
+	 * @param  int    $resultId
+	 *
+	 * @return array
+	 */
+	public function getMembers($resultId)
+	{
+		if (!$members = $this->member->with('league', 'role')->where('result_id', $resultId)->get())
+			return [];
+
+		return $this->formatter->formatMembers($members);
+	}
+
+	/**
 	 * Gets the catalog db connection
 	 *
 	 * @return \Illuminate\Database\Connection
