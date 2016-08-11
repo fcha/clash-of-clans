@@ -1,4 +1,4 @@
-<?php namespace App\API\src\ClashOfClans\Storage\Entities;
+<?php namespace App\API\src\ClashOfClans\Members\Storage\Entities;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
