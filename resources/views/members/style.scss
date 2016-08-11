@@ -1,0 +1,139 @@
+div#members-page
+{
+	width: $pageWidth;
+	margin: 0 auto;
+	text-align: center;
+
+	p
+	{
+		font-size: 12px;
+		font-family: sans-serif;
+		font-weight: 800;
+		color: #5C5745;
+		margin: 5px;
+	}
+
+	h2
+	{
+		font-size: 25px;
+		margin: 0;
+	}
+
+	h3
+	{
+		font-size: 23px;
+		margin: 0;
+	}
+
+	h4
+	{
+		font-size: 21px;
+		margin: 0;
+	}
+
+	div.member
+	{
+		@include clear;
+		background: linear-gradient(#E7E7DE, #C6C3BD);
+		border: 2px solid #C6C3BD;
+		border-radius: 10px;
+		margin: 10px 0;
+		display: flex;
+		align-items: center;
+
+		div.rank
+		{
+			float: left;
+			width: 11%;
+		}
+
+		div.league
+		{
+			float: left;
+			width: 8%;
+		}
+
+		div.experience
+		{
+			float: left;
+			width: 8%;
+		}
+
+		div.name
+		{
+			text-align: left;
+			float: left;
+			width: 18%;
+
+			p
+			{
+				margin: 0;
+			}
+		}
+
+		div.details
+		{
+			float: left;
+			width: 55%;
+			display: flex;
+			align-items: center;
+
+			div.troops
+			{
+				float: left;
+				width: 60%;
+
+				>div
+				{
+					float: left;
+					width: 50%;
+
+					p.title
+					{
+						margin: 0 5px 5px 5px;
+					}
+
+					h4.count
+					{
+						background: white;
+						border-radius: 4px;
+						width: 100px;
+						margin: 0 auto;
+						padding: 5px 0,
+					}
+				}
+			}
+
+			div.trophies
+			{
+				float: left;
+				width: 38%;
+
+				>div
+				{
+					background: linear-gradient(#F7DFAD, #EFC76B);
+					border: 2px solid #FFFFFF;
+					border-radius: 5px;
+					height: 54px;
+					position: relative;
+
+					h2
+					{
+						line-height: 54px;
+						margin-left: 30px;
+						text-align: left;
+						font-size: 41px;
+					}
+
+					img
+					{
+						position: absolute;
+						top: -11px;
+						right: 2px;
+						height: 74px;
+					}
+				}
+			}
+		}
+	}
+}
