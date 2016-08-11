@@ -12,12 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+	$fetcher = App::make('App\API\src\ClashOfClans\Members\Fetcher');
+	$members = $fetcher->getMembers();
+	$trophyImage = url('assets/images/trophy.png');
 
-Route::group(['prefix' => 'api'], function() {
-
-//    $clan = App::make('App\API\src\ClashOfClans\Fetchers\Clan');
-
-//    debug_object($clan->getActiveClanResults(), true);
+    return view('members/members', ['members' => $members, 'trophyImage' => $trophyImage]);
 });
