@@ -26,7 +26,8 @@ div#members-page {
     border-radius: 10px;
     margin: 10px 0;
     display: flex;
-    align-items: center; }
+    align-items: center;
+    height: 80px; }
     div#members-page div.member:before, div#members-page div.member:after {
       content: " ";
       display: table; }
@@ -34,10 +35,27 @@ div#members-page {
       clear: both; }
     div#members-page div.member div.rank {
       float: left;
-      width: 11%; }
+      width: 5%; }
+      div#members-page div.member div.rank h2 {
+        text-align: right; }
+    div#members-page div.member div.rank-change {
+      float: left;
+      width: 6%;
+      margin-top: 11px; }
+      div#members-page div.member div.rank-change img {
+        height: 20px; }
+      div#members-page div.member div.rank-change .equal {
+        padding: 4px 0;
+        margin-top: -10px; }
     div#members-page div.member div.league {
       float: left;
-      width: 8%; }
+      width: 8%;
+      position: relative; }
+      div#members-page div.member div.league img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); }
     div#members-page div.member div.experience {
       float: left;
       width: 8%; }

@@ -14,7 +14,14 @@
 Route::get('/', function () {
 	$fetcher = App::make('App\API\src\ClashOfClans\Members\Fetcher');
 	$members = $fetcher->getMembers();
-	$trophyImage = url('assets/images/trophy.png');
+	$images = [
+		'trophy' => url('assets/images/trophy.png'),
+		'rank' => [
+			'equal' => url('assets/images/equal.png'),
+			'up' => url('assets/images/up.png'),
+			'down' => url('assets/images/down.png')
+		]
+	];
 
-    return view('members/members', ['members' => $members, 'trophyImage' => $trophyImage]);
+    return view('members/members', ['members' => $members, 'images' => $images]);
 });

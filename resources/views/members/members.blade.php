@@ -10,6 +10,17 @@
 					<div class="rank">
 						<h2>{{ $member['rank']['current'] }}.</h2>
 					</div>
+					<div class="rank-change">
+						@if ($member['rank']['current'] == $member['rank']['previous'])
+							<img class="equal" src="{{ $images['rank']['equal'] }}">
+						@elseif ($member['rank']['current'] > $member['rank']['previous'])
+							<img src="{{ $images['rank']['up'] }}">
+							<p>{{ $member['rank']['current'] - $member['rank']['previous'] }}</p>
+						@else
+						    <img src="{{ $images['rank']['down'] }}">
+						    <p>{{ $member['rank']['previous'] - $member['rank']['current'] }}</p>
+						@endif
+					</div>
 					<div class="league">
 						<img src="{{ $member['league']['icon']['small'] }}">
 					</div>
@@ -34,7 +45,7 @@
 						<div class="trophies">
 							<div>
 								<h2>{{ $member['trophies'] }}</h2>
-								<img src="{{ $trophyImage }}">
+								<img src="{{ $images['trophy'] }}">
 							</div>
 						</div>
 					</div>
