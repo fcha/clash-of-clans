@@ -95,7 +95,10 @@ class ProcessClan extends Command
 
         foreach ($results as $result)
         {
-            $inserts = array_merge($inserts, $this->buildMemberListInsert($result['id'], $result['memberList']));
+            if (!$memberList = array_get($result, 'memberList'))
+                continue;
+
+            $inserts = array_merge($inserts, $this->buildMemberListInsert($result['id'], $memberList));
             $this->resultIds[] = $result['id'];
         }
 
