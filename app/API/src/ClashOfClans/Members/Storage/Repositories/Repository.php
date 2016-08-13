@@ -1,8 +1,11 @@
 <?php namespace App\API\src\ClashOfClans\Members\Storage\Repositories;
 
+use App\API\src\Database\MySql\Traits\ParameterInsertable;
 use App\API\src\ClashOfClans\Members\Storage\Entities\Member;
 
 class Repository implements RepositoryInterface {
+
+use ParameterInsertable;
 
 	/**
 	 * @var  \App\API\src\ClashOfClans\Members\Storage\Entities\Member
@@ -30,7 +33,7 @@ class Repository implements RepositoryInterface {
 	 */
 	public function saveMembers(array $members)
 	{
-		$this->getDb()->table('members')->insert($members);
+		$this->insertFromParameters($this->getDb()->getPdo(), $members, 'members');
 	}
 
 	/**
