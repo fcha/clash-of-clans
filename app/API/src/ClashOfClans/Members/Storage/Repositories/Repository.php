@@ -30,7 +30,7 @@ class Repository implements RepositoryInterface {
 	 */
 	public function saveMembers(array $members)
 	{
-		if (!$chunks = array_chunk($parameters, 1000))
+		if (!$chunks = array_chunk($members, 1000))
 			return;
 
 		foreach ($chunks as $chunk)
