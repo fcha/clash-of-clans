@@ -16,10 +16,11 @@ interface RepositoryInterface {
 	 *
 	 * @param  int    $typeId
 	 * @param  int    $statusId
+	 * @param  int    $limit
 	 *
 	 * @return array
 	 */
-	public function getResults($typeId, $statusId);
+	public function getResults($typeId, $statusId, $limit);
 
 	/**
 	 * Set result status
