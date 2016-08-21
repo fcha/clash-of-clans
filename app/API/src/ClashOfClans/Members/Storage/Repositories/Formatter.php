@@ -55,6 +55,41 @@ class Formatter {
 	}
 
 	/**
+	 * Format simple members
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Collection    $members
+	 *
+	 * @return array
+	 */
+	public function formatSimpleMembers(Collection $members)
+	{
+		$formatted = [];
+
+		foreach ($members as $member)
+		{
+			$formatted[] = $this->formatSimpleMember($member);
+		}
+
+		return $formatted;
+	}
+
+	/**
+	 * Format members
+	 *
+	 * @param  \App\API\src\ClashOfClans\Members\Storage\Entities\Member    $member
+	 *
+	 * @return array
+	 */
+	public function formatSimpleMember(Member $member)
+	{
+		return [
+			'id' => object_get($member, 'id'),
+			'tag' => object_get($member, 'tag'),
+			'name' => object_get($member, 'name')
+		];
+	}
+
+	/**
 	 * Format role
 	 *
 	 * @param  \App\API\src\ClashOfClans\Members\Storage\Entities\Role    $role

@@ -24,11 +24,11 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
-	 * Save members
+	 * Create members
 	 *
 	 * @param  array    $members
 	 */
-	public function saveMembers(array $members)
+	public function create(array $members)
 	{
 		if (!$chunks = array_chunk($parameters, 1000))
 			return;
@@ -52,6 +52,19 @@ class Repository implements RepositoryInterface {
 			return [];
 
 		return $this->formatter->formatMembers($members);
+	}
+
+	/**
+	 * Get simple members
+	 *
+	 * @return array
+	 */
+	public function getSimpleMembers()
+	{
+		if (!$members = $this->member->get())
+			return [];
+
+		return $this->formatter->formatSimpleMembers($members);
 	}
 
 	/**

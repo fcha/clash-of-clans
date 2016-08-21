@@ -9,19 +9,9 @@ class Member extends Eloquent {
 	protected $primaryKey = 'id';
 	protected $guarded = ['id'];
 
-	public function role()
+	public function details()
 	{
-		return $this->belongsTo('App\API\src\ClashOfClans\Members\Storage\Entities\Role', 'role_id');
-	}
-
-	public function result()
-	{
-		return $this->belongsTo('App\API\src\ClashOfClans\Storage\Entities\Result', 'result_id');
-	}
-
-	public function league()
-	{
-		return $this->belongsTo('App\API\src\ClashOfClans\Leagues\Storage\Entities\League', 'league_id', 'unique_id');
+		return $this->hasMany('App\API\src\ClashOfClans\Members\Details\Storage\Entities\MemberDetail', 'member_id');
 	}
 
 }

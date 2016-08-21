@@ -32,10 +32,20 @@ class Fetcher {
 	 */
 	public function getMembers()
 	{
-		if (!$resultId = $this->resultFetcher->getRecentCompletedClanResult())
+		if (!$resultId = $this->resultFetcher->getRecentCompletedClanResultId())
 			return [];
 
 		return $this->repository->getMembers($resultId);
+	}
+
+	/**
+	 * Get simple members
+	 *
+	 * @return array
+	 */
+	public function getSimpleMembers()
+	{
+		return $this->repository->getSimpleMembers();
 	}
 
 }
