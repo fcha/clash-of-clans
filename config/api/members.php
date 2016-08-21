@@ -4,10 +4,10 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Payment Gateways
+	| Members
 	|--------------------------------------------------------------------------
 	|
-	| Here you can define your various payment gateways
+	| Member config values
 	|
 	*/
 
