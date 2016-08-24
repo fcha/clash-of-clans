@@ -14,6 +14,11 @@ class Clan {
 	protected $resultFetcher;
 
 	/**
+	 * @var \App\API\src\ClashOfClans\Clan\Saver
+	 */
+	protected $clanSaver;
+
+	/**
 	 * @var \App\API\src\ClashOfClans\Members\Creators\Member
 	 */
 	protected $memberCreator;
@@ -38,12 +43,14 @@ class Clan {
 
 	/**
 	 * @param  \App\API\src\ClashOfClans\Results\Fetcher            $resultFetcher
+	 * @param  \App\API\src\ClashOfClans\Clan\Saver                 $clanSaver
 	 * @param  \App\API\src\ClashOfClans\Members\Creator            $memberCreator
 	 * @param  \App\API\src\ClashOfClans\Members\Details\Creator    $memberDetailCreator
 	 */
-	public function __construct(ResultFetcher $resultFetcher, MemberCreator $memberCreator, MemberDetailCreator $memberDetailCreator)
+	public function __construct(ResultFetcher $resultFetcher, ClanSaver $clanSaver, MemberCreator $memberCreator, MemberDetailCreator $memberDetailCreator)
 	{
 		$this->resultFetcher = $resultFetcher;
+		$this->clanSaver = $clanSaver;
 		$this->memberCreator = $memberCreator;
 		$this->memberDetailCreator = $memberDetailCreator;
 	}
@@ -62,19 +69,35 @@ class Clan {
 		//set created date
 		$this->createdAt = new Carbon;
 
+		//parse results
+		$this->parseResults($results);
+
+		//save clan details
+		$this->clanSaver->save($this->clan);
+
+		//create new members if necessary
+		if ($uniqueMembers = $this->buildUniqueMembers())
+			$this->memberCreator->create($uniqueMembers);
+
+		//create member details if necessary
+		if ($memberDetails = $this->buildMemberDetails())
+			$this->memberDetailCreator->create($memberDetails);
+
+		return $this->resultIds;
+	}
+
+	/**
+	 * Parse results
+	 *
+	 * @param  array    $results
+	 */
+	protected function parseResults(array $results)
+	{
 		//build member data
 		$this->buildMembers($results);
 
 		//build clan data
 		$this->buildClan();
-
-		//create new members if necessary
-		if ($uniqueMembers = $this->buildUniqueMemberInserts())
-			$this->memberCreator->create($uniqueMembers);
-
-		//create member details if necessary
-		if ($memberDetails = $this->buildMemberDetailInserts())
-			$this->memberDetailCreator->create($memberDetails);
 	}
 
 	/**
@@ -149,11 +172,11 @@ class Clan {
 	}
 
 	/**
-	 * Build unique member inserts
+	 * Build unique members
 	 *
 	 * @return array
 	 */
-	protected function buildUniqueMemberInserts()
+	protected function buildUniqueMembers()
 	{
 		//filter members list to only unique members
 		$uniqueMembers = $this->getUniqueMembers();
@@ -195,7 +218,7 @@ class Clan {
 	}
 
 	/**
-	 * Builds member details inserts
+	 * Builds member details
 	 *
 	 * @return array
 	 */
@@ -224,7 +247,7 @@ class Clan {
 			'result_id' => array_get($member, 'result_id'),
 			'tag' => array_get($member, 'tag'),
 			'role_id' => array_get($member, 'role_id'),
-			'experience' => array_get($member, 'expLevel'),
+			'experience' => array_get($member, 'experience'),
 			'league_id' => array_get($member, 'league_id'),
 			'trophies' => array_get($member, 'trophies'),
 			'current_rank' => array_get($member, 'current_rank'),
@@ -238,7 +261,7 @@ class Clan {
 	/**
 	 * Builds clan details
 	 */
-	protected function buildMemberList()
+	protected function buildClan()
 	{
 		$this->clan = [
 			'tag' => array_get($this->latestResult, 'tag'),
@@ -249,14 +272,15 @@ class Clan {
             'badge_small' => array_get($this->latestResult, 'badgeUrls.small'),
             'badge_large' => array_get($this->latestResult, 'badgeUrls.large'),
             'badge_medium' => array_get($this->latestResult, 'badgeUrls.medium'),
-            'clan_level' => array_get($this->latestResult, 'clanLevel'),
-            'clan_points' => array_get($this->latestResult, 'clanPoints'),
+            'level' => array_get($this->latestResult, 'clanLevel'),
+            'points' => array_get($this->latestResult, 'clanPoints'),
             'required_trophies' => array_get($this->latestResult, 'requiredTrophies'),
             'war_frequency' => array_get($this->latestResult, 'warFrequency'),
             'war_win_streak' => array_get($this->latestResult, 'warWinStreak'),
             'war_wins' => array_get($this->latestResult, 'warWins'),
             'war_ties' => array_get($this->latestResult, 'warTies'),
             'war_losses' => array_get($this->latestResult, 'warLosses'),
+            'members' => array_get($this->latestResult, 'members'),
 		];
 	}
 
