@@ -24,19 +24,52 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
+	 * Fetch clan
+	 */
+	public function fetch()
+	{
+		if (!$clan = $this->clan->first())
+			return;
+
+		return $this->formatter->formatClan($clan);
+	}
+
+	/**
+	 * Create clan
+	 *
+	 * @param  array    $clanDetails
+	 */
+	public function create(array $clanDetails)
+	{
+		$clan = new Clan;
+
+		$this->saveDetails($clan, $clanDetails);
+	}
+
+	/**
 	 * Save clan
 	 *
 	 * @param  array    $clanDetails
 	 */
 	public function save(array $clanDetails)
 	{
-		if (!$clan = $this->clan->first())
-			$clan = new Clan;
+		$clan = $this->clan->first();
 
+		$this->saveDetails($clan, $clanDetails);
+	}
+
+	/**
+	 * Save details
+	 *
+	 * @param  App\API\src\ClashOfClans\Clan\Storage\Entities\Clan    $clan
+	 * @param  array                                                  $clanDetails
+	 */
+	protected function saveDetails(Clan $clan, array $clanDetails)
+	{
 		$clan->location_id = array_get($clanDetails, 'location_id');
 		$clan->members = array_get($clanDetails, 'members');
-		$clan->clan_level = array_get($clanDetails, 'clan_level');
-		$clan->clan_points = array_get($clanDetails, 'clan_points');
+		$clan->level = array_get($clanDetails, 'level');
+		$clan->points = array_get($clanDetails, 'points');
 		$clan->required_trophies = array_get($clanDetails, 'required_trophies');
 		$clan->war_win_streak = array_get($clanDetails, 'war_win_streak');
 		$clan->war_wins = array_get($clanDetails, 'war_wins');

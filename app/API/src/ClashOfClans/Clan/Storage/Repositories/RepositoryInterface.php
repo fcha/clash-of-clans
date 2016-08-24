@@ -2,11 +2,24 @@
 
 interface RepositoryInterface {
 
+
+	/**
+	 * Fetch clan
+	 */
+	public function fetch();
+
+	/**
+	 * Create clan
+	 *
+	 * @param  array    $clanDetails
+	 */
+	public function create(array $clanDetails);
+
 	/**
 	 * Save clan
 	 *
-	 * @param  array    $clan
+	 * @param  array    $clanDetails
 	 */
-	public function save(array $clan);
+	public function save(array $clanDetails);
 
 }
