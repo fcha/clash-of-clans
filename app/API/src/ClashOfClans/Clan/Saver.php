@@ -24,8 +24,10 @@ class Saver {
 	 */
 	public function save(array $clan)
 	{
-		//save
-		$this->repository->save($clan);
+		if ($this->repository->fetch())
+			$this->repository->save($clan);
+		else
+			$this->repository->create($clan);
 	}
 
 }
