@@ -6,7 +6,6 @@ class Clan extends Eloquent {
 
 	protected $connection = 'mysql';
 	protected $table = 'clan';
-	protected $primaryKey = 'id';
-	protected $guarded = ['id'];
+	protected $primaryKey = 'tag';
 
 }
