@@ -14,4 +14,9 @@ class Member extends Eloquent {
 		return $this->hasMany('App\API\src\ClashOfClans\Members\Details\Storage\Entities\MemberDetail', 'member_id');
 	}
 
+	public function currentDetails()
+	{
+		return $this->hasOne('App\API\src\ClashOfClans\Members\Details\Storage\Entities\MemberDetail', 'member_id')->orderBy('result_id', 'DESC');
+	}
+
 }

@@ -12,11 +12,11 @@ interface RepositoryInterface {
 	/**
 	 * Get members
 	 *
-	 * @param  int    $resultId
+	 * @param  int    $statusId
 	 *
 	 * @return array
 	 */
-	public function getMembers($resultId);
+	public function getMembers($statusId);
 
 	/**
 	 * Get simple members

@@ -30,7 +30,7 @@ class Repository implements RepositoryInterface {
 	 */
 	public function create(array $members)
 	{
-		if (!$chunks = array_chunk($parameters, 1000))
+		if (!$chunks = array_chunk($members, 1000))
 			return;
 
 		foreach ($chunks as $chunk)
@@ -42,13 +42,13 @@ class Repository implements RepositoryInterface {
 	/**
 	 * Get members
 	 *
-	 * @param  int    $resultId
+	 * @param  int    $statusId
 	 *
 	 * @return array
 	 */
-	public function getMembers($resultId)
+	public function getMembers($statusId)
 	{
-		if (!$members = $this->member->with('league', 'role')->where('result_id', $resultId)->get())
+		if (!$members = $this->member->with('currentDetails.league', 'currentDetails.role')->where('status_id', $statusId)->get())
 			return [];
 
 		return $this->formatter->formatMembers($members);

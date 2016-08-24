@@ -21,13 +21,23 @@ class Repository implements RepositoryInterface {
 	 */
 	public function create(array $memberDetails)
 	{
-		if (!$chunks = array_chunk($parameters, 1000))
+		if (!$chunks = array_chunk($memberDetails, 1000))
 			return;
 
 		foreach ($chunks as $chunk)
 		{
 			$this->getDb()->table('member_details')->insert($chunk);
 		}
+	}
+
+	/**
+	 * Gets the catalog db connection
+	 *
+	 * @return \Illuminate\Database\Connection
+	 */
+	protected function getDb()
+	{
+		return (new MemberDetail)->getConnection();
 	}
 
 }

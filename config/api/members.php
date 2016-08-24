@@ -19,6 +19,11 @@ return [
 		'admin' => 5
 	],
 
+	'statuses' => [
+		'active' => 1,
+		'inactive' => 2,
+	],
+
 	'details' => [
 		'statuses' => [
 			'current' => 1,
