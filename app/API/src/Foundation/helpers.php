@@ -23,16 +23,19 @@ if ( ! function_exists('array_index'))
 		{
 			if (is_array($value))
 			{
+				$indexValue = array_get($value, $index);
+
 				if ($indexPrefix)
-					$new_key = $indexPrefix . STRING_DELIMITER . $value[$index];
+					$newKey = $indexPrefix . config('constants.string_delimiter') . $indexValue;
 				else
-					$new_key = $value[$index];
-				if (isset($value[$index]))
+					$newKey = $indexValue;
+
+				if ($indexValue)
 				{
 					if ($flattenFlag)
-						$return[$new_key] = $value[$index];
+						$return[$newKey] = $indexValue;
 					else
-						$return[$new_key] = $value;
+						$return[$newKey] = $value;
 				}
 			}
 			else
@@ -58,17 +61,12 @@ if ( ! function_exists('debug_object'))
 	function debug_object($object, $exit=false)
 	{
 		if(is_object($object) || is_array($object))
-		{
-			echo '<pre>'.print_r($object, true).'</pre>';
-		}
+			echo '<pre>' . print_r($object, true) . '</pre>';
 		else
-		{
 			var_dump($object);
-		}
+
 		if($exit)
-		{
 			exit();
-		}
 	}
 }
 

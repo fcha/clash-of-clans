@@ -24,11 +24,11 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
-	 * Save members
+	 * Create members
 	 *
 	 * @param  array    $members
 	 */
-	public function saveMembers(array $members)
+	public function create(array $members)
 	{
 		if (!$chunks = array_chunk($members, 1000))
 			return;
@@ -42,16 +42,29 @@ class Repository implements RepositoryInterface {
 	/**
 	 * Get members
 	 *
-	 * @param  int    $resultId
+	 * @param  int    $statusId
 	 *
 	 * @return array
 	 */
-	public function getMembers($resultId)
+	public function getMembers($statusId)
 	{
-		if (!$members = $this->member->with('league', 'role')->where('result_id', $resultId)->get())
+		if (!$members = $this->member->with('currentDetails.league', 'currentDetails.role')->where('status_id', $statusId)->get())
 			return [];
 
 		return $this->formatter->formatMembers($members);
+	}
+
+	/**
+	 * Get simple members
+	 *
+	 * @return array
+	 */
+	public function getSimpleMembers()
+	{
+		if (!$members = $this->member->get())
+			return [];
+
+		return $this->formatter->formatSimpleMembers($members);
 	}
 
 	/**

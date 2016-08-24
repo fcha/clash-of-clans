@@ -21,6 +21,11 @@ class ServiceProvider extends BaseServiceProvider {
 			'App\API\src\ClashOfClans\Members\Storage\Repositories\RepositoryInterface',
 			'App\API\src\ClashOfClans\Members\Storage\Repositories\Repository'
 		);
+
+		$this->app->singleton(
+			'App\API\src\ClashOfClans\Members\Details\Storage\Repositories\RepositoryInterface',
+			'App\API\src\ClashOfClans\Members\Details\Storage\Repositories\Repository'
+		);
 	}
 
 }

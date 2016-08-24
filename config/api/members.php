@@ -4,10 +4,10 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Payment Gateways
+	| Members
 	|--------------------------------------------------------------------------
 	|
-	| Here you can define your various payment gateways
+	| Member config values
 	|
 	*/
 
@@ -16,6 +16,19 @@ return [
 		'coLeader' => 2,
 		'elder' => 3,
 		'member' => 4,
-		'admin' => 5,
+		'admin' => 5
 	],
+
+	'statuses' => [
+		'active' => 1,
+		'inactive' => 2,
+	],
+
+	'details' => [
+		'statuses' => [
+			'current' => 1,
+			'active' => 2,
+			'replaced' => 3
+		]
+	]
 ];

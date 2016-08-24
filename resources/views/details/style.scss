@@ -1,0 +1,73 @@
+div#clan-details-page
+{
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
+
+	p
+	{
+		font-size: 20px;
+		font-family: sans-serif;
+		font-weight: 800;
+		margin: 5px;
+	}
+
+	h2
+	{
+		font-size: 35px;
+		margin: 0;
+	}
+
+	h3
+	{
+		font-size: 23px;
+		margin: 0;
+	}
+
+	div.clan
+	{
+		div.badge
+		{
+			position: relative;
+
+			p
+			{
+				position: absolute;
+				color: white;
+				right: 280px;
+				top: 18px;
+				font-size: 32px;
+			}
+		}
+
+		div.name
+		{
+			@include clear;
+		}
+
+		div.details
+		{
+			@include clear;
+		}
+
+		div.description
+		{
+			p
+			{
+				margin-top: 10px;
+				font-size: 15px;
+			}
+		}
+
+		.left
+		{
+			float: left;
+		}
+
+		.right
+		{
+			float: right;
+			text-align: right;
+		}
+	}
+}

@@ -3,10 +3,25 @@
 interface RepositoryInterface {
 
 	/**
-	 * Save members
+	 * Create members
 	 *
 	 * @param  array    $members
 	 */
-	public function saveMembers(array $members);
+	public function create(array $members);
 
+	/**
+	 * Get members
+	 *
+	 * @param  int    $statusId
+	 *
+	 * @return array
+	 */
+	public function getMembers($statusId);
+
+	/**
+	 * Get simple members
+	 *
+	 * @return array
+	 */
+	public function getSimpleMembers();
 }

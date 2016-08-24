@@ -20,14 +20,16 @@ class Fetcher {
 	/**
 	 * Gets the clan results information
 	 *
+	 * @param  int    $limit
+	 *
 	 * @return array
 	 */
-	public function getActiveClanResults()
+	public function getActiveClanResults($limit = 10)
 	{
 		$typeId = config('api.results.types.clans');
 		$statusId = config('api.results.statuses.active');
 
-		return $this->repository->getResults($typeId, $statusId);
+		return $this->repository->getResults($typeId, $statusId, $limit);
 	}
 
 	/**
@@ -56,6 +58,18 @@ class Fetcher {
 	 *
 	 * @return array
 	 */
+	public function getRecentCompletedClanResultId()
+	{
+		$recentResult = $this->getRecentCompletedClanResult();
+
+		return array_get($recentResult, 'id');
+	}
+
+	/**
+	 * Get the recent clan result information
+	 *
+	 * @return array
+	 */
 	public function getRecentCompletedClanResult()
 	{
 		$typeId = config('api.results.types.clans');
@@ -63,7 +77,7 @@ class Fetcher {
 
 		$recentResult = $this->repository->getRecentResult($typeId, $statusId);
 
-		return array_get($recentResult, 'id');
+		return $recentResult;
 	}
 
 }

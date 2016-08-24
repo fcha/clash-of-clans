@@ -46,12 +46,13 @@ class Repository implements RepositoryInterface {
 	 *
 	 * @param  int    $typeId
 	 * @param  int    $statusId
+	 * @param  int    $limit
 	 *
 	 * @return array
 	 */
-	public function getResults($typeId, $statusId)
+	public function getResults($typeId, $statusId, $limit)
 	{
-		if (!$results = $this->result->whereTypeId($typeId)->whereStatusId($statusId)->get())
+		if (!$results = $this->result->whereTypeId($typeId)->whereStatusId($statusId)->take($limit)->get())
 			return [];
 
 		return $this->formatter->formatResults($results);

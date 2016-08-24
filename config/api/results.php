@@ -4,10 +4,10 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Payment Gateways
+	| Results
 	|--------------------------------------------------------------------------
 	|
-	| Here you can define your various payment gateways
+	| Results config values
 	|
 	*/
 
