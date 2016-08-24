@@ -11,9 +11,18 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
+	$fetcher = App::make('App\API\src\ClashOfClans\Clan\Fetcher');
+	$clan = $fetcher->fetch();
+
+    return view('details/details', ['clan' => $clan]);
+});
+
+Route::get('members', function ()
+{
 	$fetcher = App::make('App\API\src\ClashOfClans\Members\Fetcher');
-	$members = $fetcher->getMembers();
+	$members = $fetcher->getActiveMembers();
 	$images = [
 		'trophy' => url('assets/images/trophy.png'),
 		'rank' => [
@@ -24,4 +33,22 @@ Route::get('/', function () {
 	];
 
     return view('members/members', ['members' => $members, 'images' => $images]);
+});
+
+Route::get('test/result', function ()
+{
+	$fetcher = App::make('App\API\src\ClashOfClans\Results\Fetcher');
+	debug_object($fetcher->getActiveClanResults());
+});
+
+Route::get('test/members', function ()
+{
+	$fetcher = App::make('App\API\src\ClashOfClans\Members\Fetcher');
+	debug_object($fetcher->getActiveMembers());
+});
+
+Route::get('test/clan', function ()
+{
+	$fetcher = App::make('App\API\src\ClashOfClans\Clan\Fetcher');
+	debug_object($fetcher->fetch());
 });
