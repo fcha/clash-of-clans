@@ -79,7 +79,7 @@ class Creator {
 			'result_id' => array_get($detail, 'result_id'),
 			'role_id' => array_get($detail, 'role_id'),
 			'member_id' => array_get($this->members, array_get($detail, 'tag') . '.id'),
-			'experience' => array_get($detail, 'expLevel'),
+			'experience' => array_get($detail, 'experience'),
 			'league_id' => array_get($detail, 'league_id'),
 			'trophies' => array_get($detail, 'trophies'),
 			'current_rank' => array_get($detail, 'current_rank'),
