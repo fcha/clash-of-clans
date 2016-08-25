@@ -18,8 +18,8 @@ class ServiceProvider extends BaseServiceProvider {
 	protected function registerRepositories()
 	{
 		$this->app->singleton(
-			'App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\RepositoryInterface',
-			'App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\Repository'
+			'App\API\src\ClashOfClans\Results\Storage\Repositories\Guzzle\RepositoryInterface',
+			'App\API\src\ClashOfClans\Results\Storage\Repositories\Guzzle\Repository'
 		);
 
 		$this->app->singleton(

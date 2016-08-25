@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\RepositoryInterface as Fetcher;
+use App\API\src\ClashOfClans\Results\Storage\Repositories\Guzzle\RepositoryInterface as Fetcher;
 use App\API\src\ClashOfClans\Results\Storage\Repositories\Eloquent\RepositoryInterface as Saver;
 
 class FetchClan extends Command
@@ -23,7 +23,7 @@ class FetchClan extends Command
     protected $description = 'Fetches and stores clan information from SuperCell\'s API';
 
     /**
-     * @var \App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\RepositoryInterface
+     * @var \App\API\src\ClashOfClans\Results\Storage\Repositories\Guzzle\RepositoryInterface
      */
     protected $fetcher;
 
@@ -33,7 +33,7 @@ class FetchClan extends Command
     protected $saver;
 
     /**
-     * @param \App\API\src\ClashOfClans\Results\Storage\Repositories\cURL\RepositoryInterface        $fetcher
+     * @param \App\API\src\ClashOfClans\Results\Storage\Repositories\Guzzle\RepositoryInterface        $fetcher
      * @param \App\API\src\ClashOfClans\Results\Storage\Repositories\Eloquent\RepositoryInterface    $saver
      */
     public function __construct(Fetcher $fetcher, Saver $saver)
