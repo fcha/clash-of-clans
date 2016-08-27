@@ -8,4 +8,9 @@ class Clan extends Eloquent {
 	protected $table = 'clan';
 	protected $primaryKey = 'tag';
 
+	public function location()
+	{
+		return $this->belongsTo('App\API\src\ClashOfClans\Locations\Storage\Entities\Location', 'location_id', 'unique_id');
+	}
+
 }

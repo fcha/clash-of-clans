@@ -15,7 +15,8 @@ class Formatter {
 	{
 		return [
 			'location' => [
-				'id' => object_get($clan, 'location_id'),
+				'id' => object_get($clan, 'location.id'),
+				'name' => object_get($clan, 'location.name'),
 			],
 			'members' => object_get($clan, 'members'),
 			'level' => object_get($clan, 'level'),

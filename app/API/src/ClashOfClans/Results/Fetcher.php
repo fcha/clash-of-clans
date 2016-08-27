@@ -54,6 +54,27 @@ class Fetcher {
 	}
 
 	/**
+	 * Gets the recent location results information
+	 *
+	 * @return array
+	 */
+	public function getRecentActiveLocationResults()
+	{
+		$typeId = config('api.results.types.locations');
+		$statusId = config('api.results.statuses.active');
+
+		$recentResult = $this->repository->getRecentResult($typeId, $statusId);
+
+		$statusId = config('api.results.statuses.completed');
+		$completedResult = $this->repository->getRecentResult($typeId, $statusId);
+
+		if (array_get($completedResult, 'id', 0) >= array_get($recentResult, 'id', 0))
+			return [];
+
+		return $recentResult;
+	}
+
+	/**
 	 * Get the recent clan result information
 	 *
 	 * @return array
@@ -75,9 +96,20 @@ class Fetcher {
 		$typeId = config('api.results.types.clans');
 		$statusId = config('api.results.statuses.completed');
 
-		$recentResult = $this->repository->getRecentResult($typeId, $statusId);
+		return $this->repository->getRecentResult($typeId, $statusId);
+	}
 
-		return $recentResult;
+	/**
+	 * Gets the recent clan war log results information
+	 *
+	 * @return array
+	 */
+	public function getRecentActiveWarResults($limit = 10)
+	{
+		$typeId = config('api.results.types.clan_war');
+		$statusId = config('api.results.statuses.active');
+
+		return $this->repository->getResults($typeId, $statusId, $limit);
 	}
 
 }

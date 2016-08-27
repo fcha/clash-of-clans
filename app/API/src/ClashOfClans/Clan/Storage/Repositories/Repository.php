@@ -28,7 +28,7 @@ class Repository implements RepositoryInterface {
 	 */
 	public function fetch()
 	{
-		if (!$clan = $this->clan->first())
+		if (!$clan = $this->clan->with('location')->first())
 			return;
 
 		return $this->formatter->formatClan($clan);
