@@ -52,3 +52,9 @@ Route::get('test/clan', function ()
 	$fetcher = App::make('App\API\src\ClashOfClans\Clan\Fetcher');
 	debug_object($fetcher->fetch());
 });
+
+Route::get('test/war', function ()
+{
+	$fetcher = App::make('App\API\src\ClashOfClans\Results\Fetcher');
+	debug_object($fetcher->getRecentActiveWarResults());
+});

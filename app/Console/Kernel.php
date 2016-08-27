@@ -20,6 +20,8 @@ class Kernel extends ConsoleKernel
         Commands\ProcessLeague::class,
         Commands\FetchLocation::class,
         Commands\ProcessLocation::class,
+        Commands\FetchWar::class,
+        Commands\ProcessWar::class
     ];
 
     /**

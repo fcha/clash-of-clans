@@ -12,7 +12,7 @@
 				<div id="cssmenu">
 					<ul>
 						<li><a href="/"><span>Home</span></a></li>
-						<li><a href="/"><span>Clan</span></a></li>
+						<li><a href="war-log"><span>War Log</span></a></li>
 						<li><a href="members"><span>Members</span></a></li>
 					</ul>
 				</div>
