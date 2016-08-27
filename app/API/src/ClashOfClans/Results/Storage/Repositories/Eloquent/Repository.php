@@ -24,7 +24,7 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
-	 * Save api results
+	 * Save results
 	 *
 	 * @param  int       $type
 	 * @param  int       $status
@@ -42,7 +42,7 @@ class Repository implements RepositoryInterface {
 	}
 
 	/**
-	 * Get active clan results
+	 * Get results
 	 *
 	 * @param  int    $typeId
 	 * @param  int    $statusId
