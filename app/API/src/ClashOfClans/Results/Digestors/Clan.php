@@ -275,11 +275,11 @@ class Clan {
             'level' => array_get($this->latestResult, 'clanLevel'),
             'points' => array_get($this->latestResult, 'clanPoints'),
             'required_trophies' => array_get($this->latestResult, 'requiredTrophies'),
-            'war_frequency' => array_get($this->latestResult, 'war.frequency'),
-            'war_win_streak' => array_get($this->latestResult, 'war.win_streak'),
-            'war_wins' => array_get($this->latestResult, 'war.wins'),
-            'war_ties' => array_get($this->latestResult, 'war.ties'),
-            'war_losses' => array_get($this->latestResult, 'war.losses'),
+            'war_frequency' => array_get($this->latestResult, 'warFrequency'),
+            'war_win_streak' => array_get($this->latestResult, 'warWinStreak'),
+            'war_wins' => array_get($this->latestResult, 'warWins'),
+            'war_ties' => array_get($this->latestResult, 'warTies'),
+            'war_losses' => array_get($this->latestResult, 'warLosses'),
             'members' => array_get($this->latestResult, 'members'),
 		];
 	}
