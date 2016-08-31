@@ -22,6 +22,7 @@ class ServiceProvider extends BaseServiceProvider {
 		$this->app->register('App\API\src\ClashOfClans\Locations\ServiceProvider');
 		$this->app->register('App\API\src\ClashOfClans\Members\ServiceProvider');
 		$this->app->register('App\API\src\ClashOfClans\Results\ServiceProvider');
+		$this->app->register('App\API\src\ClashOfClans\Wars\ServiceProvider');
 	}
 
 }

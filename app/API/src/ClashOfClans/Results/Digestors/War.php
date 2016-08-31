@@ -1,7 +1,7 @@
 <?php namespace App\API\src\ClashOfClans\Results\Digestors;
 
 use Carbon\Carbon;
-use App\API\src\ClashOfClans\War\Saver as WarSaver;
+use App\API\src\ClashOfClans\Wars\Saver as WarSaver;
 use App\API\src\ClashOfClans\Results\Fetcher as ResultFetcher;
 
 class War {
@@ -12,7 +12,7 @@ class War {
 	protected $resultFetcher;
 
 	/**
-	 * @var \App\API\src\ClashOfClans\War\Saver
+	 * @var \App\API\src\ClashOfClans\Wars\Saver
 	 */
 	protected $warSaver;
 
@@ -30,16 +30,16 @@ class War {
 
 	/**
 	 * @param  \App\API\src\ClashOfClans\Results\Fetcher    $resultFetcher
-	 * @param  \App\API\src\ClashOfClans\War\Saver          $warSaver
+	 * @param  \App\API\src\ClashOfClans\Wars\Saver          $warSaver
 	 */
-	public function __construct(ResultFetcher $resultFetcher, ClanSaver $clanSaver)
+	public function __construct(ResultFetcher $resultFetcher, WarSaver $warnSaver)
 	{
 		$this->resultFetcher = $resultFetcher;
-		$this->clanSaver = $clanSaver;
+		$this->warnSaver = $warnSaver;
 	}
 
 	/**
-	 * Digest clan results
+	 * Digest war results
 	 *
 	 * @return array
 	 */
@@ -55,12 +55,12 @@ class War {
 		//parse results
 		$this->parseResults($results);
 
-		//save clan details
-		$this->clanSaver->save($this->clan);
-
 		//create new members if necessary
-		if ($uniqueMembers = $this->buildUniqueMembers())
-			$this->memberCreator->create($uniqueMembers);
+		if ($uniqueWars = $this->buildUniqueWars())
+		{
+			debug_object($uniqueWars, true);
+			$this->warSaver->save($uniqueWars);
+		}
 
 		//create member details if necessary
 		if ($memberDetails = $this->buildMemberDetails())
@@ -84,193 +84,103 @@ class War {
 			if (!$wars = array_get($result, 'items'))
 				continue;
 
-			$this->wars = array_merge($this->wars, $this->buildMemberList($resultId, $memberList));
+			$this->wars = array_merge($this->wars, $this->buildWars($resultId, $wars));
 		}
-
-		return $this->members;
 	}
 
 	/**
-	 * Builds result members
-	 *
-	 * @param  array    $results
-	 */
-	protected function buildMembers(array $results)
-	{
-		foreach ($results as $result)
-		{
-			$resultId = array_get($result, 'id');
-			$this->resultIds[] = $resultId;
-
-			if (!$memberList = array_get($result, 'memberList'))
-				continue;
-
-			$this->members = array_merge($this->members, $this->buildMemberList($resultId, $memberList));
-
-			$this->latestResult = $result;
-		}
-
-		return $this->members;
-	}
-
-	/**
-	 * Builds member list
+	 * Build wars
 	 *
 	 * @param  int      $resultId
-	 * @param  array    $members
+	 * @param  array    $wars
+	 */
+	protected function buildWars($resultId, array $wars)
+	{
+		$formattedWars = [];
+
+		foreach ($wars as $war)
+		{
+			$formattedWars[] = $this->buildWar($resultId, $war);
+		}
+
+		return $formattedWars;
+	}
+
+	/**
+	 * Build war
+	 *
+	 * @param  int      $resultId
+	 * @param  array    $war
 	 *
 	 * @return array
 	 */
-	protected function buildMemberList($resultId, array $members)
+	protected function buildWar($resultId, array $war)
 	{
-		$memberList = [];
-
-		foreach ($members as $member)
-		{
-			$memberList[] = $this->buildMember($resultId, $member);
-		}
-
-		return $memberList;
-	}
-
-	/**
-	 * Build member
-	 *
-	 * @param  int      $resultId
-	 * @param  array    $member
-	 *
-	 * @return array
-	 */
-	protected function buildMember($resultId, array $member)
-	{
-		$roleId = config('api.members.roles.' . array_get($member, 'role'));
-
 		return [
 			'result_id' => $resultId,
-			'tag' => array_get($member, 'tag'),
-			'name' => array_get($member, 'name'),
-			'role_id' => $roleId,
-			'experience' => array_get($member, 'expLevel'),
-			'league_id' => array_get($member, 'league.id'),
-			'trophies' => array_get($member, 'trophies'),
-			'current_rank' => array_get($member, 'clanRank'),
-			'previous_rank' => array_get($member, 'previousClanRank'),
-			'troops_donated' => array_get($member, 'donations'),
-			'troops_received' => array_get($member, 'donationsReceived'),
+			'result' => array_get($war, 'result'),
+			'end_time' => array_get($war, 'endTime'),
+			'team_size' => array_get($war, 'teamSize'),
+			'clan' => [
+				'tag' => array_get($war, 'clan.tag'),
+				'name' => array_get($war, 'clan.name'),
+				'level' => array_get($war, 'clan.clanLevel'),
+				'attacks' => array_get($war, 'clan.attacks'),
+				'stars' => array_get($war, 'clan.stars'),
+				'destruction_percentage' => array_get($war, 'clan.destructionPercentage'),
+				'exp_earned' => array_get($war, 'clan.expEarned'),
+				'badge_small' => array_get($war, 'clan.badgeUrls.small'),
+				'badge_medium' => array_get($war, 'clan.badgeUrls.medium'),
+				'badge_large' => array_get($war, 'clan.badgeUrls.large'),
+			],
+			'opponent' => [
+				'tag' => array_get($war, 'opponent.tag'),
+				'name' => array_get($war, 'opponent.name'),
+				'level' => array_get($war, 'opponent.clanLevel'),
+				'stars' => array_get($war, 'opponent.stars'),
+				'destruction_percentage' => array_get($war, 'opponent.destructionPercentage'),
+				'exp_earned' => array_get($war, 'opponent.expEarned'),
+				'badge_small' => array_get($war, 'opponent.badgeUrls.small'),
+				'badge_medium' => array_get($war, 'opponent.badgeUrls.medium'),
+				'badge_large' => array_get($war, 'opponent.badgeUrls.large'),
+			],
 			'created_at' => $this->createdAt
 		];
 	}
 
 	/**
-	 * Build unique members
+	 * Build unique wars
 	 *
 	 * @return array
 	 */
-	protected function buildUniqueMembers()
+	protected function buildUniqueWars()
 	{
-		//filter members list to only unique members
-		$uniqueMembers = $this->getUniqueMembers();
+		$formattedWars = [];
+		$wars = array_index($this->wars, 'endTime');
 
-		return $this->buildNewMembers($uniqueMembers);
-	}
-
-	/**
-	 * Get unique members
-	 *
-	 * @return array
-	 */
-	protected function getUniqueMembers()
-	{
-		return array_index($this->members, 'tag');
-	}
-
-	/**
-	 * Builds the new members
-	 *
-	 * @param  array    $members
-	 *
-	 * @return array
-	 */
-	protected function buildNewMembers(array $members)
-	{
-		$newMembers = [];
-
-		foreach ($members as $member)
+		foreach ($wars as $war)
 		{
-			$newMembers[] = [
-				'tag' => array_get($member, 'tag'),
-				'name' => array_get($member, 'name'),
-				'created_at' => array_get($member, 'created_at'),
-			];
+			$formattedWars[] = $this->formatWar($war);
 		}
 
-		return $newMembers;
+		return $formattedWars;
 	}
 
 	/**
-	 * Builds member details
+	 * Format war
+	 *
+	 * @param  array    $war
 	 *
 	 * @return array
 	 */
-	protected function buildMemberDetails()
-	{
-		$memberDetails = [];
-
-		foreach ($this->members as $member)
-		{
-			$memberDetails[] = $this->buildMemberDetail($member);
-		}
-
-		return $memberDetails;
-	}
-
-	/**
-	 * Build the member detail
-	 *
-	 * @param  array    $member
-	 *
-	 * @return array
-	 */
-	protected function buildMemberDetail(array $member)
+	protected function formatWar(array $war)
 	{
 		return [
-			'result_id' => array_get($member, 'result_id'),
-			'tag' => array_get($member, 'tag'),
-			'role_id' => array_get($member, 'role_id'),
-			'experience' => array_get($member, 'experience'),
-			'league_id' => array_get($member, 'league_id'),
-			'trophies' => array_get($member, 'trophies'),
-			'current_rank' => array_get($member, 'current_rank'),
-			'previous_rank' => array_get($member, 'previous_rank'),
-			'troops_donated' => array_get($member, 'troops_donated'),
-			'troops_received' => array_get($member, 'troops_received'),
-			'created_at' => array_get($member, 'created_at')
-		];
-	}
-
-	/**
-	 * Builds clan details
-	 */
-	protected function buildClan()
-	{
-		$this->clan = [
-			'tag' => array_get($this->latestResult, 'tag'),
-            'name' => array_get($this->latestResult, 'name'),
-            'type' => array_get($this->latestResult, 'type'),
-            'description' => array_get($this->latestResult, 'description'),
-            'location_id' => array_get($this->latestResult, 'location.id'),
-            'badge_small' => array_get($this->latestResult, 'badgeUrls.small'),
-            'badge_large' => array_get($this->latestResult, 'badgeUrls.large'),
-            'badge_medium' => array_get($this->latestResult, 'badgeUrls.medium'),
-            'level' => array_get($this->latestResult, 'clanLevel'),
-            'points' => array_get($this->latestResult, 'clanPoints'),
-            'required_trophies' => array_get($this->latestResult, 'requiredTrophies'),
-            'war_frequency' => array_get($this->latestResult, 'warFrequency'),
-            'war_win_streak' => array_get($this->latestResult, 'warWinStreak'),
-            'war_wins' => array_get($this->latestResult, 'warWins'),
-            'war_ties' => array_get($this->latestResult, 'warTies'),
-            'war_losses' => array_get($this->latestResult, 'warLosses'),
-            'members' => array_get($this->latestResult, 'members'),
+			'result_id' => array_get($war, 'result_id'),
+			'result' => array_get($war, 'result'),
+			'end_time' => array_get($war, 'end_time'),
+			'team_size' => array_get($war, 'team_size'),
+			'created_at' => array_get($war, 'created_at')
 		];
 	}
 
