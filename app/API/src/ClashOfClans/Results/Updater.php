@@ -20,9 +20,11 @@ class Updater {
 	/**
 	 * Gets the clan  information
 	 *
+	 * @param  array    $results
+	 *
 	 * @return array
 	 */
-	public function completeResults($results)
+	public function completeResults(array $results)
 	{
 		$completedStatusId = config('api.results.statuses.completed');
 

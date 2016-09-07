@@ -49,10 +49,8 @@ class ProcessClan extends Command
 	 */
 	public function handle()
 	{
-		$resultIds = $this->digestor->digest();
-
-		//complete results
-		$this->resultUpdater->completeResults($resultIds);
+		if ($resultIds = $this->digestor->digest())
+			$this->resultUpdater->completeResults($resultIds);
 	}
 
 }
