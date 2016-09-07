@@ -48,7 +48,7 @@ class Repository implements RepositoryInterface {
 	 */
 	public function getMembers($statusId)
 	{
-		if (!$members = $this->member->with('currentDetails.league', 'currentDetails.role')->where('status_id', $statusId)->get())
+		if (!$members = $this->member->where('status_id', $statusId)->get())
 			return [];
 
 		return $this->formatter->formatMembers($members);
